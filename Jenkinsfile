@@ -36,11 +36,13 @@ pipeline{
                 // }
             }
 
-            stage ('Fixing dependencies') {
+            
+        }
+
+        stage ('Fixing dependencies') {
                 steps {
                     sh 'npm audit fix --force '
                 }
-            }
         }
         
     }
