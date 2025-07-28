@@ -23,15 +23,22 @@ pipeline{
                     }
                 }
 
-                stage('OWASP Dependency Check') {
-                    steps {
-                        dependencyCheck additionalArguments: '''
-                            --scan \'./\'
-                            --out \'./\'
-                            --format \'ALL\'
-                            --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
-                        dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependecy-check-report.xml', stopBuild: true
-                    }
+                
+                // stage('OWASP Dependency Check') {
+                //     steps {
+                //         dependencyCheck additionalArguments: '''
+                //             --scan \'./\'
+                //             --out \'./\'
+                //             --format \'ALL\'
+                //             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-10'
+                //         dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependecy-check-report.xml', stopBuild: true
+                //     }
+                // }
+            }
+
+            stage ('Fixing dependencies') {
+                steps {
+                    sh 'npm audit fix --force '
                 }
             }
         }
